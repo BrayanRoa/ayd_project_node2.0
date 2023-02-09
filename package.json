@@ -1,5 +1,5 @@
 {
-  "name": "eskeleton-ts-node-typeorm",
+  "name": "ayd_project_node2.0",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Brayan Andrés Roa López",
   "license": "ISC",
   "dependencies": {
     "class-transformer": "^0.5.1",

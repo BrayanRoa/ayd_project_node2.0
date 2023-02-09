@@ -1,15 +1,15 @@
 import { DeleteResult } from 'typeorm';
-import { BaseService } from '../../config/base.service';
-import { UserDTO } from '../dto/user.dto';
-import { UserEntity } from '../entity/user.entity';
+import { BaseService } from '../../../config/base.service';
+import { RoleDTO } from '../dto/role.dto';
+import { RoleEntity } from '../entity/role.entity';
 
-export class UserService extends BaseService<UserEntity>{
+export class RoleService extends BaseService<RoleEntity>{
     
     constructor(){
-        super(UserEntity)
+        super(RoleEntity)
     }
 
-    async findAll(): Promise<UserEntity[] | undefined> {
+    async findAll(): Promise<RoleEntity[] | undefined> {
         try {
             return (await this.execRepository).find()
         } catch (error) {
@@ -17,7 +17,7 @@ export class UserService extends BaseService<UserEntity>{
         }
     }
 
-    async findById(id: string): Promise<UserEntity | undefined | null> {
+    async findById(id: string): Promise<RoleEntity | undefined | null> {
         try {
             return (await this.execRepository).findOneBy({ id })
         } catch (error) {
@@ -25,7 +25,7 @@ export class UserService extends BaseService<UserEntity>{
         }
     }
 
-    async createUser(body: UserDTO): Promise<UserEntity | undefined> {
+    async createUser(body: RoleDTO): Promise<RoleEntity | undefined> {
         try {
             return (await this.execRepository).save(body)
         } catch (error) {
@@ -41,7 +41,7 @@ export class UserService extends BaseService<UserEntity>{
         }
     }
 
-    async updateUser(id: string, infoUpdate: UserDTO) {
+    async updateUser(id: string, infoUpdate: RoleDTO) {
         try {
             return (await this.execRepository).update(id, infoUpdate)
         } catch (error) {

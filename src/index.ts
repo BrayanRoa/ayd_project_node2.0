@@ -2,8 +2,8 @@ import express, { Application } from 'express'
 import cors from "cors"
 import morgan from "morgan"
 import { ConfigServer } from "./config/config"
-import { UserRouter } from './user/user.router'
 import swaggerUi from 'swagger-ui-express';
+import { RoleRouter } from './person/role/role.router';
 
 
 class Server extends ConfigServer {
@@ -30,10 +30,8 @@ class Server extends ConfigServer {
     }
 
     routers(): express.Router[] {
-        return [new UserRouter().router]
+        return [new RoleRouter().router]
     }
-
-    
 
     listen() {
         this.app.listen(this.PORT, () => {
