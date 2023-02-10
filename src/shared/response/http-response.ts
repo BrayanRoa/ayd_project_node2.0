@@ -61,4 +61,17 @@ export class HttpResponse {
             data
         })
     }
+
+    Custom(res: Response, data: any){
+        if(data.code === "23505"){
+            return res.status(HttpStatus.BAD_REQUEST).json({
+                status: HttpStatus.BAD_REQUEST,
+                statusMsg: "BAD REQUEST",
+                data:data.detail
+            })
+        }
+        else{
+            this.Error(res, "something went wrong")
+        }
+    }
 }
