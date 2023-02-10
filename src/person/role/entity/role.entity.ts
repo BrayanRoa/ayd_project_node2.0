@@ -7,7 +7,8 @@ export class RoleEntity extends BaseEntity {
 
     @Column({
         type:"varchar",
-        nullable:false
+        nullable:false,
+        unique:true
     })
     name!:string
 

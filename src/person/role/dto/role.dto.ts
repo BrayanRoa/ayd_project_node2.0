@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { BaseDTO } from '../../../config/base.dto';
 
 export class RoleDTO extends BaseDTO{
@@ -8,5 +8,6 @@ export class RoleDTO extends BaseDTO{
     name!:string
     
     @IsBoolean()
+    @IsOptional()
     state?:boolean
 }
