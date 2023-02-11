@@ -1,9 +1,10 @@
 import express, { Application } from 'express'
 import cors from "cors"
 import morgan from "morgan"
-import { ConfigServer } from "./config/config"
 import swaggerUi from 'swagger-ui-express';
+import { ConfigServer } from "./config/config"
 import { RoleRouter } from './person/role/role.router';
+import { DocumentTypeRouter } from './person/document_type/document_type.router';
 
 
 class Server extends ConfigServer {
@@ -16,9 +17,8 @@ class Server extends ConfigServer {
         this.PORT = this.getNumberEnv("PORT") || 3000
         this.middlewares()
         this.db()
-        this.app.use("/api", this.routers())
+        this.app.use("/api/", this.routers())
         this.app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(this.swagger()));
-        this.swagger()
         this.listen()
     }
 
@@ -30,7 +30,10 @@ class Server extends ConfigServer {
     }
 
     routers(): express.Router[] {
-        return [new RoleRouter().router]
+        return [
+            new RoleRouter().router,
+            new DocumentTypeRouter().router    
+        ]
     }
 
     listen() {

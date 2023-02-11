@@ -46,11 +46,18 @@ export class PersonEntity extends BaseEntity{
     })
     img!:string
 
+    @Column({
+        type:"boolean",
+        default:true,
+        nullable:false
+    })
+    active!:boolean
+
     @ManyToOne(()=>RoleEntity, (role)=> role.person)
     @JoinColumn({name:"role_id"})
     role!:RoleEntity
 
     @ManyToOne(()=>DocumentTypeEntity, (document)=> document.person)
     @JoinColumn({name:"document_id"})
-    document_type!:null
+    document_type!:DocumentTypeEntity
 }
