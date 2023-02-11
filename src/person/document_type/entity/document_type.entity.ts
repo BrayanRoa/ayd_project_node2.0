@@ -7,7 +7,8 @@ export class DocumentTypeEntity extends BaseEntity {
 
     @Column({
         type:"varchar",
-        nullable:false
+        nullable:false,
+        unique:true
     })
     name!:string
 
