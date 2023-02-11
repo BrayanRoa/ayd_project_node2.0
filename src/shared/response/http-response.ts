@@ -3,6 +3,7 @@ import { Response } from "express";
 export enum HttpStatus {
     OK = 200,
     CREATED = 201,
+    NO_CONTENT = 204,
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
     FORBIDDEN = 403,
@@ -26,6 +27,14 @@ export class HttpResponse {
         return res.status(HttpStatus.CREATED).json({
             status: HttpStatus.CREATED,
             statusMsg: "CREATED",
+            data
+        })
+    }
+
+    NoContent(res: Response, data: any): Response{
+        return res.status(HttpStatus.NO_CONTENT).json({
+            status: HttpStatus.NO_CONTENT,
+            statusMsg: "NO CONTENT",
             data
         })
     }
@@ -71,7 +80,8 @@ export class HttpResponse {
             })
         }
         else{
-            this.Error(res, "something went wrong")
+            console.log(data.message);
+            this.Error(res, data.message)
         }
     }
 }
