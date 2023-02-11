@@ -1,10 +1,77 @@
+components:
+  schemas:
+    RoleAndDocumentResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        data: 
+          type: object
+          properties:
+            id:
+              type: string
+            created_at:
+              type: date
+            updated_at:
+              type: date
+            name:
+              type: string
+            state:
+              type: boolean
+
+
+#! ---------------- ROLES ------------------- !#
+#* **************** GET ALL ********************* #
 paths:
-  /users:
+  /roles:
     get:
       tags: 
-        - User
-      summary: "Get all users"
+        - Role
+      summary: "Get all roles"
       
+      responses:
+        200:
+          description: "OK"
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/RoleAndDocumentResponse"
+
+#* **************** GET ONE ********************* #
+  /role/{id}:
+    get:
+      tags: 
+        - Role
+      summary: "get one role with id"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "identifier role"
+      responses:
+        200:
+          description: "OK"
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/RoleAndDocumentResponse"
+
+#* **************** GET ONE WITH PERSONN ********************* #
+  /roleWithPersons/{id}:
+    get:
+      tags: 
+        - Role
+      summary: "get one role with their persons"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "identifier role"
+          
       responses:
         200:
           description: "OK"
@@ -15,59 +82,56 @@ paths:
                 properties:
                   status:
                     type: string
-                  statusMsg:
+                  message:
                     type: string
-                  data:
+                  data: 
                     type: object
                     properties:
-                      id:
-                        type: string
                       name:
                         type: string
-                      lastname:
-                        type: string
-                      username:
-                        type: string
-                      email:
-                        type: string
-                      password:
-                        type: string
-                      city: 
-                        type: string
-                      province:
-                        type: string
-  /user/{id}:
-    get:
-      tags: 
-        - User
-      summary: "Obtener un usuario por ID"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          type: "integer"
-      responses:
-        200:
-          description: "OK"
-  /createUser:
+                      person: 
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          lastnames:
+                            type: string
+                          code: 
+                            type: string
+                          institutional_mail:
+                            type: string
+
+#* **************** CREATE ********************* #
+  /role/create:
     post:
       tags: 
-        - User
-      summary: "Crear un usuario"
-      parameters:
-        - name: "user"
-          in: "body"
-          required: true
-          schema:
-            $ref: "#/definitions/User"
+        - Role
+      summary: "create a new role"
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties: 
+                name:
+                  type: string
+
       responses:
         201:
-          description: "Creado"
-  /deleteUser/{id}:
-    delete:
+          description: "Created"
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/RoleAndDocumentResponse"
+          
+#* **************** DELETE ********************* #
+  /role/delete/{id}:
+    patch:
       tags: 
-        - User
-      summary: "Borrar un usuario por ID"
+        - Role
+      summary: "delete one role by id"
       parameters:
         - name: "id"
           in: "path"
@@ -75,22 +139,174 @@ paths:
           type: "integer"
       responses:
         204:
-          description: "Eliminado"
-  /updateUser/{id}:
+          description: "deleted successfully"
+
+#* **************** UPDATE ********************* #
+  /role/update/{id}:
     patch:
       tags: 
-        - User
-      summary: "Actualizar un usuario por ID"
+        - Role
+      summary: "update role with id"
       parameters:
         - name: "id"
           in: "path"
           required: true
           type: "integer"
-        - name: "user"
-          in: "body"
-          required: true
-          schema:
-            $ref: "#/definitions/User"
+        
+      requestBody:
+      required: true
+      content:
+        application/json:
+          schema: 
+            type: object
+            properties: 
+              name:
+                type: string
       responses:
         200:
-          description: "Actualizado"
+          description: "update successfully"
+
+
+
+#! ---------------- DOCUMENT ------------------- !#
+#* **************** GET ALL ********************* #
+  /documents:
+    get:
+      tags: 
+        - Document Type
+      summary: "Get all documents"
+      
+      responses:
+        200:
+          description: "OK"
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/RoleAndDocumentResponse"
+
+#* **************** GET ONE ********************* #
+  /document/{id}:
+    get:
+      tags: 
+        - Document Type
+      summary: "get one document with id"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "identifier document"
+      responses:
+        200:
+          description: "OK"
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/RoleAndDocumentResponse"
+
+#* **************** GET ONE WITH PERSONN ********************* #
+  /documentWithPersons/{id}:
+    get:
+      tags: 
+        - Document Type
+      summary: "get one document with their persons"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "identifier document"
+          
+      responses:
+        200:
+          description: "OK"
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  data: 
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      person: 
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          lastnames:
+                            type: string
+                          code: 
+                            type: string
+                          institutional_mail:
+                            type: string
+
+#* **************** CREATE ********************* #
+  /document/create:
+    post:
+      tags: 
+        - Document Type
+      summary: "create a new document type"
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties: 
+                name:
+                  type: string
+
+      responses:
+        201:
+          description: "Created"
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/RoleAndDocumentResponse"
+          
+#* **************** DELETE ********************* #
+  /document/delete/{id}:
+    patch:
+      tags: 
+        - Document Type
+      summary: "delete one document by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "integer"
+      responses:
+        204:
+          description: "deleted successfully"
+
+#* **************** UPDATE ********************* #
+  /documentType/update/{id}:
+    patch:
+      tags: 
+        - Document Type
+      summary: "update document with id"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "integer"
+        
+      requestBody:
+      required: true
+      content:
+        application/json:
+          schema: 
+            type: object
+            properties: 
+              name:
+                type: string
+      responses:
+        200:
+          description: "update successfully"
