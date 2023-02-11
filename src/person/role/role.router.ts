@@ -17,7 +17,13 @@ export class RoleRouter extends BaseRouter<RoleController, RoleMiddleware>{
         this.router.get(
             "/role/:id",
             (req, res, next) => [this.middleware.uuidValidator(req, res, next)],
-            (req, res) => this.controller.findById(req, res))
+            (req, res) => this.controller.findOneById(req, res))
+
+        this.router.get(
+            "/roleWithPersons/:id",
+            (req, res, next) => [this.middleware.uuidValidator(req, res, next)],
+            (req, res) => this.controller.findByIdWithPersons(req, res)
+        )
 
         this.router.post(
             "/role/create",

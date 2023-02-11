@@ -12,14 +12,33 @@ export class RoleService extends BaseService<RoleEntity>{
     async findAll(): Promise<RoleEntity[] | undefined> {
         try {
             return (await this.execRepository).find()
-        } catch (error) {
-            console.log(error);
+        } catch (error:any) {
+            throw new Error(error)
         }
     }
 
-    async findById(id: string): Promise<RoleEntity | undefined | null> {
+    async findById(id: string):Promise<RoleEntity | null> {
         try {
-            return (await this.execRepository).findOneBy({ id })
+            return (await this.execRepository).findOneBy({id})
+        } catch (error:any) {
+            throw new Error(error)
+        }
+    }
+
+    async findByIdWithPersons(id: string): Promise<RoleEntity | undefined | null> {
+        try {
+            return (await this.execRepository)
+                .createQueryBuilder("role")
+                .leftJoin("role.person", "person")
+                .where("role.id = :id", { id:id })
+                .select([
+                    "role.name",
+                    "person.names",
+                    "person.lastnames",
+                    "person.institutional_mail",
+                    "person.code"
+                ])
+                .getOne()
         } catch (error: any) {
             console.log(error);
             throw new Error(error)
@@ -37,16 +56,16 @@ export class RoleService extends BaseService<RoleEntity>{
     async delete(id: string): Promise<DeleteResult | undefined> {
         try {
             return (await this.execRepository).update(id, {state:false})
-        } catch (error) {
-            console.log(error);
+        } catch (error:any) {
+            throw new Error(error)
         }
     }
 
     async update(id: string, name: string) {
         try {
             return (await this.execRepository).update(id, { name })
-        } catch (error) {
-            console.log(error);
+        } catch (error:any) {
+            throw new Error(error)
         }
     }
 }

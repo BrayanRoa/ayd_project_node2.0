@@ -21,10 +21,22 @@ export class RoleController {
         }
     }
 
-    async findById(req: Request, res: Response) {
+    async findOneById(req: Request, res: Response) {
         try {
             const { id } = req.params
             const role = await this.roleService.findById(id);
+            (!role)
+                ? this.httpResponse.NotFound(res, `Rol with id ${id} not found`)
+                : this.httpResponse.Ok(res, role)
+        } catch (e) {
+            this.httpResponse.Error(res, e)
+        }
+    }
+
+    async findByIdWithPersons(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const role = await this.roleService.findByIdWithPersons(id);
             (!role)
                 ? this.httpResponse.NotFound(res, `Rol with id ${id} not found`)
                 : this.httpResponse.Ok(res, role)
