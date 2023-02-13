@@ -52,7 +52,7 @@ export class DocumentTypeController{
             const newDocument = await this.documentService.create(body);
             this.httpResponse.Ok(res, newDocument)
         } catch (e) {
-            return this.httpResponse.Error(res, e)
+            return this.httpResponse.Custom(res, e)
         }
     }
 
