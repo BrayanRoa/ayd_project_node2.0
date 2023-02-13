@@ -38,7 +38,7 @@ export class DocumentTypeRouter extends BaseRouter<DocumentTypeController, Docum
             (req, res) => this.controller.update(req, res)
         )
 
-        this.router.patch(
+        this.router.delete(
             "/document/delete/:id",
             (req, res, next) => this.middleware.uuidValidator(req, res, next),
             (req, res) => this.controller.delete(req, res)
