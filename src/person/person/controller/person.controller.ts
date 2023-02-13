@@ -35,8 +35,8 @@ export class PersonController {
 
     async create(req: Request, res: Response) {
         try {
-            const person = await this.personService.create(req.body);
-            this.httpResponse.Created(res, person)
+            await this.personService.create(req.body);
+            this.httpResponse.Created(res, `person created successfully`)
         } catch (error) {
             this.httpResponse.Custom(res, error);
         }
