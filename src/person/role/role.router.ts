@@ -35,7 +35,7 @@ export class RoleRouter extends BaseRouter<RoleController, RoleMiddleware>{
             (req, res, next) => [this.middleware.uuidValidator(req, res, next)],
             (req, res) => this.controller.update(req, res))
 
-        this.router.patch(
+        this.router.delete(
             "/role/delete/:id",
             (req, res, next) => [this.middleware.uuidValidator(req, res, next)],
             (req, res) => this.controller.delete(req, res))
