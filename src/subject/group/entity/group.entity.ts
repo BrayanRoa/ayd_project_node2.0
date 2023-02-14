@@ -1,5 +1,5 @@
 import { BaseEntity } from '../../../config/base.entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { SubjectEntity } from '../../subject/entity/subject.entity';
 
 @Entity({name:"group"})
@@ -21,4 +21,9 @@ export class GroupEntity extends BaseEntity{
     @ManyToOne(() => SubjectEntity, (subject) => subject.group)
     @JoinColumn({name:"subject_code"})
     subject!:SubjectEntity
+
+    @BeforeInsert()
+    toLowerCase(){
+        this.name = this.name.toUpperCase()
+    }
 }
