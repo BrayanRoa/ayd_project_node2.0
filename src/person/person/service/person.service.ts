@@ -58,8 +58,8 @@ export class PersonService extends BaseService<PersonEntity>{
         try {
             const document = await this.documentService.findById(person.document_id)
             const role = await this.roleService.findById(person.role_id)
-            const newPerson = (await this.execRepository).create(person)
             if (document && role) {
+                const newPerson = (await this.execRepository).create(person)
                 newPerson.role = role
                 newPerson.document_type = document
                 return (await this.execRepository).save(newPerson)

@@ -1,38 +1,38 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID, Length } from "class-validator"
+import { Contains, IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID, Length } from "class-validator"
 
 
-export class PersonDTO{
+export class PersonDTO {
 
-    
     @IsEmail()
     @IsNotEmpty()
     @IsString()
-    institutional_mail!:string
+    @Contains("@ufps.edu.co")
+    institutional_mail!: string
 
     @IsString()
     @IsNotEmpty()
-    names!:string
+    names!: string
 
     @IsString()
     @IsNotEmpty()
-    lastnames!:string
+    lastnames!: string
 
     @IsString()
     @IsNotEmpty()
     @Length(7, 8)
-    code!:string
+    code!: string
 
     @IsOptional()
     @IsString()
-    img?:string
+    img?: string
 
     @IsUUID()
     @IsString()
     @IsNotEmpty()
-    role_id!:string
+    role_id!: string
 
     @IsUUID()
     @IsString()
     @IsNotEmpty()
-    document_id!:string
+    document_id!: string
 }

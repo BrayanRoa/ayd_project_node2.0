@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { BaseEntity } from "../../../config/base.entity";
 import { DocumentTypeEntity } from "../../document_type/entity/document_type.entity";
 import { RoleEntity } from '../../role/entity/role.entity';
@@ -60,4 +60,11 @@ export class PersonEntity extends BaseEntity{
     @ManyToOne(()=>DocumentTypeEntity, (document)=> document.person)
     @JoinColumn({name:"document_id"})
     document_type!:DocumentTypeEntity
+
+    @BeforeInsert()
+    toLowerCase(){
+        this.names = this.names.toLowerCase()
+        this.lastnames = this.lastnames.toLowerCase()
+        this.institutional_mail = this.institutional_mail.toLowerCase()
+    }
 }
