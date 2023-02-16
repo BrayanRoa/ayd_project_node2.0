@@ -1,7 +1,7 @@
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { BaseDTO } from '../../../config/base.dto';
+// import { BaseDTO } from '../../../config/base.dto';
 
-export class RoleDTO extends BaseDTO{
+export class RoleDTO {
 
     @IsString()
     @IsNotEmpty()    
