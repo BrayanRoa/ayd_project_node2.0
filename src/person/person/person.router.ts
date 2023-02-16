@@ -37,5 +37,14 @@ export class PersonRouter extends BaseRouter<PersonController, PersonMiddleware>
             (req, res, next) => this.middleware.uuidValidator(req, res, next),
             (req, res) => this.controller.delete(req, res)
         )
+
+        this.router.get('/person/teachers/all',
+            (req, res) => this.controller.getAllTeachers(req, res)
+        )
+
+        this.router.get('/persons/group/:id',
+            (req, res, next) => [this.middleware.uuidValidator(req, res, next)],
+            (req, res) => this.controller.getAllPersonOfGroup(req, res)
+        )
     }
 }

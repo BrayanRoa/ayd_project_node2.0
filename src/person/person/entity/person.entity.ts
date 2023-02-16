@@ -1,7 +1,8 @@
-import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { BaseEntity } from "../../../config/base.entity";
 import { DocumentTypeEntity } from "../../document_type/entity/document_type.entity";
 import { RoleEntity } from '../../role/entity/role.entity';
+import { GroupPersonEntity } from '../../../subject/group_person/entity/group_person.entity';
 
 @Entity({name:"person"})
 export class PersonEntity extends BaseEntity{
@@ -60,6 +61,9 @@ export class PersonEntity extends BaseEntity{
     @ManyToOne(()=>DocumentTypeEntity, (document)=> document.person)
     @JoinColumn({name:"document_id"})
     document_type!:DocumentTypeEntity
+
+    @OneToMany(()=> GroupPersonEntity, (group_person) => group_person.person)
+    groups!:GroupPersonEntity[]
 
     @BeforeInsert()
     toLowerCase(){

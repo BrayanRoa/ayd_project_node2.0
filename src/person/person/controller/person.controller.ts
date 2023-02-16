@@ -65,4 +65,27 @@ export class PersonController {
             this.httpResponse.Error(res, error);
         }
     }    
+
+    async getAllTeachers(_req: Request, res: Response) {
+        try {
+            const teachers = await this.personService.getAllTeachers();
+            (teachers?.length === 0)
+                ? this.httpResponse.NotFound(res, `no registered teachers yet`)
+                : this.httpResponse.Ok(res, teachers);
+        } catch (error) {
+            this.httpResponse.Error(res, error);
+        }
+    }
+
+    async getAllPersonOfGroup(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const persons = await this.personService.getAllPersonOfGroup(id);
+            (!persons)
+                ? this.httpResponse.NotFound(res, `There are no people registered in this group yet`)
+                : this.httpResponse.Ok(res, persons);
+        } catch (error) {
+            this.httpResponse.Error(res, error);
+        }
+    }
 }

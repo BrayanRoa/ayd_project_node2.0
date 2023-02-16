@@ -32,6 +32,32 @@ export class PersonService extends BaseService<PersonEntity>{
         }
     }
 
+    async getAllTeachers(): Promise<PersonEntity[] | undefined> {
+        try {
+            return (await this.execRepository)
+                .createQueryBuilder("person")
+                .leftJoin("person.role","role")
+                .where("role.name = :name", {name:"docente"})
+                .getMany()
+        } catch (error:any) {
+            throw new Error(error)
+        }
+    }
+
+    async getAllPersonOfGroup(group_id:string) {
+        try {
+            return (await this.execRepository)
+                .createQueryBuilder("person")
+                .leftJoin("person.groups", "group")
+                .leftJoin("person.role","role")
+                .where("group.group_id = :group_id" ,{group_id})
+                .select(["person", "role.name"])
+                .getMany()
+        } catch (error:any) {
+            throw new Error(error)
+        }
+    }
+
     async findOneBy(term: string): Promise<PersonEntity | null> {
         try {
             return (await this.execRepository)
