@@ -1,8 +1,8 @@
 import { IsBoolean, IsNotEmpty, IsString, IsOptional } from "class-validator"
-import { BaseDTO } from '../../../config/base.dto';
+// import { BaseDTO } from '../../../config/base.dto';
 
 
-export class DocumentTypeDTO extends BaseDTO{
+export class DocumentTypeDTO {
     
     @IsString()
     @IsNotEmpty()
