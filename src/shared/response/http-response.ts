@@ -66,22 +66,17 @@ export class HttpResponse {
     Error(res: Response, data: any): Response {
         return res.status(HttpStatus.INTERNAR_SERVER_ERROR).json({
             status: HttpStatus.INTERNAR_SERVER_ERROR,
-            statusMsg: "INTERNAR_SERVER_ERROR",
+            statusMsg: "INTERNAL_SERVER_ERROR",
             data
         })
     }
 
     Custom(res: Response, data: any){
         if(data.code === "23505"){
-            return res.status(HttpStatus.BAD_REQUEST).json({
-                status: HttpStatus.BAD_REQUEST,
-                statusMsg: "BAD REQUEST",
-                data:data.detail
-            })
+            this.BadRequest(res, data.detail)
         }
         else{
-            console.log(data.message);
-            this.Error(res, data.message)
+            this.BadRequest(res, data)
         }
     }
 }
