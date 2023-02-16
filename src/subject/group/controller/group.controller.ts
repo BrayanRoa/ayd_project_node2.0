@@ -8,7 +8,7 @@ export class GroupController {
 
     constructor(
         private readonly groupService: GroupService = new GroupService(),
-        private readonly httpResponse: HttpResponse = new HttpResponse()
+        private readonly httpResponse: HttpResponse = new HttpResponse(),
     ) { }
 
     async findAll(_req: Request, res: Response) {
@@ -73,13 +73,5 @@ export class GroupController {
     //     }
     // }
 
-    //TODO: COMPLETAR
-    // async seeGroupPersons(_req: Request, res: Response) {
-    //     try {
-
-    //     } catch (error) {
-    //         this.httpResponse.Error(res, error);
-    //     }
-    // }
 
 }

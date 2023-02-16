@@ -7,8 +7,8 @@ import { SubjectService } from '../../subject/service/subject.service';
 export class GroupService extends BaseService<GroupEntity>{
 
     constructor(
-        private readonly subjectService: SubjectService = new SubjectService()
-    ) {
+        private readonly subjectService: SubjectService = new SubjectService(),
+        ) {
         super(GroupEntity)
     }
 
@@ -65,13 +65,13 @@ export class GroupService extends BaseService<GroupEntity>{
         }
     }
 
-    async exist(name:string, code:string): Promise<GroupEntity | null> {
+    async exist(name: string, code: string): Promise<GroupEntity | null> {
         try {
             return (await this.execRepository)
                 .createQueryBuilder("group")
-                .where("group.name = :name AND group.subject_code = :code", {name, code})
+                .where("group.name = :name AND group.subject_code = :code", { name, code })
                 .getOne()
-        } catch (error:any) {
+        } catch (error: any) {
             throw new Error(error)
         }
     }
