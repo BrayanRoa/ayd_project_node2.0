@@ -1,4 +1,9 @@
-# Skeleton to start a project in node 🚀
+<div>
+    <p align="center">
+        <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--egmJbu5X--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/trp0zksm3rffm69rp35z.png" width="400" alt="UFPS Logo" />
+    </p>
+</div>
+
 
 1. Clone the repository
 
@@ -28,3 +33,13 @@
 6. To run in development we must run the following script: 
 
 ```npm run start:dev```
+
+7. Used technology
+
+* Node js
+* TypeOrm
+* Postgres
+* Docker
+* Git 
+* SendGrid
+* Swagger
