@@ -1,11 +1,11 @@
-import { IsDate, IsOptional, IsUUID } from "class-validator";
+import { IsDate, IsOptional} from "class-validator";
 
 
 export class BaseDTO{
     
-    @IsUUID()
-    @IsOptional()
-    id?:string
+    // @IsUUID()
+    // @IsOptional()
+    // id?:string
     
     @IsDate()
     @IsOptional()
