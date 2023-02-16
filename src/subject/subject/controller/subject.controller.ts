@@ -24,10 +24,10 @@ export class SubjectController {
 
     async findOneBy(req: Request, res: Response) {
         try {
-            const { id } = req.params
-            const subject = await this.subjectService.findOneBy(id);
+            const { code } = req.params
+            const subject = await this.subjectService.findOneBy(code);
             (!subject)
-                ? this.httpResponse.NotFound(res, `subject with id ${id} not found`)
+                ? this.httpResponse.NotFound(res, `subject with id ${code} not found`)
                 : this.httpResponse.Ok(res, subject);
         } catch (error) {
             this.httpResponse.Error(res, error);
@@ -45,10 +45,10 @@ export class SubjectController {
 
     async update(req: Request, res: Response) {
         try {
-            const { id } = req.params
-            const subject:UpdateResult = await this.subjectService.update(id, req.body);
+            const { code } = req.params
+            const subject:UpdateResult = await this.subjectService.update(code, req.body);
             (subject.affected === 0)
-                ? this.httpResponse.NotFound(res, `Subject with id ${id} not found`)
+                ? this.httpResponse.NotFound(res, `Subject with id ${code} not found`)
                 : this.httpResponse.Ok(res, `Subject updated successfully`);
         } catch (error) {
             this.httpResponse.Custom(res, error);

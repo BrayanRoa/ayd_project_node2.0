@@ -14,7 +14,7 @@ export class SubjectRouter extends BaseRouter<SubjectController, SubjectMiddlewa
             (req, res) => this.controller.findAll(req, res)
         )
 
-        this.router.get('/subject/:id',
+        this.router.get('/subject/:code',
             (req, res, next) => this.middleware.uuidValidator(req, res, next),
             (req, res) => this.controller.findOneBy(req, res)
         )
@@ -24,7 +24,7 @@ export class SubjectRouter extends BaseRouter<SubjectController, SubjectMiddlewa
             (req, res) => this.controller.create(req, res)
         )
 
-        this.router.patch('/subject/update/:id',
+        this.router.patch('/subject/update/:code',
             (req, res, next) => this.middleware.uuidValidator(req, res, next),
             (req, res, next) => this.middleware.subjectValidator(req, res, next),
             (req, res) => this.controller.update(req, res)
