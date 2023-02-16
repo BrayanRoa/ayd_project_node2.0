@@ -5,6 +5,10 @@ import swaggerUi from 'swagger-ui-express';
 import { ConfigServer } from "./config/config"
 import { RoleRouter } from './person/role/role.router';
 import { DocumentTypeRouter } from './person/document_type/document_type.router';
+import { PersonRouter } from './person/person/person.router';
+import { SubjectRouter } from './subject/subject/subject.router';
+import { GroupRouter } from './subject/group/group.router';
+import { GroupPersonRouter } from './subject/group_person/group_person.router';
 
 
 class Server extends ConfigServer {
@@ -18,7 +22,7 @@ class Server extends ConfigServer {
         this.middlewares()
         this.db()
         this.app.use("/api/", this.routers())
-        this.app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(this.swagger()));
+        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(this.swagger()));
         this.listen()
     }
 
@@ -32,7 +36,11 @@ class Server extends ConfigServer {
     routers(): express.Router[] {
         return [
             new RoleRouter().router,
-            new DocumentTypeRouter().router    
+            new DocumentTypeRouter().router,
+            new PersonRouter().router,
+            new SubjectRouter().router,
+            new GroupRouter().router,
+            new GroupPersonRouter().router
         ]
     }
 
