@@ -8,7 +8,7 @@ export class GroupService extends BaseService<GroupEntity>{
 
     constructor(
         private readonly subjectService: SubjectService = new SubjectService(),
-        ) {
+    ) {
         super(GroupEntity)
     }
 
@@ -45,7 +45,7 @@ export class GroupService extends BaseService<GroupEntity>{
                 throw new Error(`subject with id ${body.subject_code} not found or group already exist`)
             }
         } catch (error: any) {
-            throw new Error(error)
+            throw new Error(error.message)
         }
     }
 
@@ -61,6 +61,32 @@ export class GroupService extends BaseService<GroupEntity>{
         try {
             return (await this.execRepository).update(id, { active: false })
         } catch (error: any) {
+            throw new Error(error)
+        }
+    }
+
+    async seeGroupTasks(id: string): Promise<GroupEntity | null> {
+        try {
+            return (await this.execRepository)
+                .createQueryBuilder("group")
+                .leftJoin("group.task", "task")
+                .where("group.id =:id", { id })
+                .select(["group.name", "group.active", "task"])
+                .getOne()
+        } catch (error: any) {
+            throw error.message
+        }
+    }
+
+    async seeGroupProjects(id:string): Promise<GroupEntity | null> {
+        try {
+            return (await this.execRepository)
+                .createQueryBuilder("group")
+                .leftJoin("group.project", "project")
+                .where("group.id =:id", { id })
+                .select(["group.name", "group.active", "project"])
+                .getOne()
+        } catch (error:any) {
             throw new Error(error)
         }
     }

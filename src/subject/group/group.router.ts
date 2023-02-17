@@ -30,5 +30,15 @@ export class GroupRouter extends BaseRouter<GroupController, GroupMiddleware>{
             (req, res, next) => this.middleware.groupValidator(req, res, next),
             (req, res) => this.controller.update(req, res)
         )
+
+        this.router.get('/group/tasks/:id',
+            (req, res, next) => [this.middleware.uuidValidator(req, res, next)],
+            (req, res) => this.controller.seeGroupTasks(req, res)
+        )
+
+        this.router.get('/group/projects/:id',
+            (req, res, next) => [this.middleware.uuidValidator(req, res, next)],
+            (req, res) => this.controller.seeGroupProjects(req, res)
+        )
     }
 }
