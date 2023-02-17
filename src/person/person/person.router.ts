@@ -46,5 +46,9 @@ export class PersonRouter extends BaseRouter<PersonController, PersonMiddleware>
             (req, res, next) => [this.middleware.uuidValidator(req, res, next)],
             (req, res) => this.controller.getAllPersonOfGroup(req, res)
         )
+
+        this.router.get('/person/subjects/:mail',
+            (req, res) => this.controller.mySubjects(req, res)
+        )
     }
 }

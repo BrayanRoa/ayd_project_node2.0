@@ -1,10 +1,11 @@
 import { PersonService } from '../service/person.service';
 import { HttpResponse } from '../../../shared/response/http-response';
 import { Request, Response } from 'express';
-import { DeleteResult, UpdateResult } from 'typeorm';
+import { DeleteResult } from 'typeorm';
 
 
 export class PersonController {
+
     constructor(
         private readonly personService: PersonService = new PersonService(),
         private readonly httpResponse: HttpResponse = new HttpResponse()
@@ -45,7 +46,7 @@ export class PersonController {
     async update(req: Request, res: Response) {
         try {
             const { id } = req.params
-            const personUpdate:UpdateResult = await this.personService.update(id, req.body);
+            const personUpdate = await this.personService.update(id, req.body);
             (personUpdate.affected === 0)
                 ? this.httpResponse.NotFound(res, `person with id ${id} not found`)
                 : this.httpResponse.Ok(res, `Person updated successfully`);
@@ -56,15 +57,15 @@ export class PersonController {
 
     async delete(req: Request, res: Response) {
         try {
-            const {id} = req.params
-            const person:DeleteResult = await this.personService.delete(id);
+            const { id } = req.params
+            const person: DeleteResult = await this.personService.delete(id);
             (person.affected === 0)
                 ? this.httpResponse.NotFound(res, `person with id ${id} not found`)
                 : this.httpResponse.Ok(res, `person deleted successfully`);
         } catch (error) {
             this.httpResponse.Error(res, error);
         }
-    }    
+    }
 
     async getAllTeachers(_req: Request, res: Response) {
         try {
@@ -84,6 +85,18 @@ export class PersonController {
             (!persons)
                 ? this.httpResponse.NotFound(res, `There are no people registered in this group yet`)
                 : this.httpResponse.Ok(res, persons);
+        } catch (error) {
+            this.httpResponse.Error(res, error);
+        }
+    }
+
+    async mySubjects(req: Request, res: Response) {
+        try {
+            const { mail } = req.params
+            const subjects = await this.personService.mySubjects(mail);
+            (!subjects)
+                ? this.httpResponse.NotFound(res, `person with email ${mail} not found`)
+                : this.httpResponse.Ok(res, subjects);
         } catch (error) {
             this.httpResponse.Error(res, error);
         }

@@ -3,70 +3,74 @@ import { BaseEntity } from "../../../config/base.entity";
 import { DocumentTypeEntity } from "../../document_type/entity/document_type.entity";
 import { RoleEntity } from '../../role/entity/role.entity';
 import { GroupPersonEntity } from '../../../subject/group_person/entity/group_person.entity';
+import { ProjectPersonEntity } from '../../../subject/project_person/entity/project_person.entity';
 
-@Entity({name:"person"})
-export class PersonEntity extends BaseEntity{
-
-    @Column({
-        type:"varchar",
-        length:100,
-        unique:true,
-        nullable:false
-    })
-    institutional_mail!:string
+@Entity({ name: "person" })
+export class PersonEntity extends BaseEntity {
 
     @Column({
-        type:"varchar",
-        length:30,
-        unique:false,
-        nullable:false
+        type: "varchar",
+        length: 100,
+        unique: true,
+        nullable: false
     })
-    names!:string
+    institutional_mail!: string
 
     @Column({
-        type:"varchar",
-        length:30,
-        unique:false,
-        nullable:false
+        type: "varchar",
+        length: 30,
+        unique: false,
+        nullable: false
     })
-    lastnames!:string
+    names!: string
 
     @Column({
-        type:"varchar",
-        length:8,
-        unique:true,
-        nullable:false
+        type: "varchar",
+        length: 30,
+        unique: false,
+        nullable: false
     })
-    code!:string
+    lastnames!: string
 
     @Column({
-        type:"varchar",
-        length:255,
-        unique:false,
-        nullable:true
+        type: "varchar",
+        length: 8,
+        unique: true,
+        nullable: false
     })
-    img!:string
+    code!: string
 
     @Column({
-        type:"boolean",
-        default:true,
-        nullable:false
+        type: "varchar",
+        length: 255,
+        unique: false,
+        nullable: true
     })
-    active!:boolean
+    img!: string
 
-    @ManyToOne(()=>RoleEntity, (role)=> role.person)
-    @JoinColumn({name:"role_id"})
-    role!:RoleEntity
+    @Column({
+        type: "boolean",
+        default: true,
+        nullable: false
+    })
+    active!: boolean
 
-    @ManyToOne(()=>DocumentTypeEntity, (document)=> document.person)
-    @JoinColumn({name:"document_id"})
-    document_type!:DocumentTypeEntity
+    @ManyToOne(() => RoleEntity, (role) => role.person)
+    @JoinColumn({ name: "role_id" })
+    role!: RoleEntity
 
-    @OneToMany(()=> GroupPersonEntity, (group_person) => group_person.person)
-    groups!:GroupPersonEntity[]
+    @ManyToOne(() => DocumentTypeEntity, (document) => document.person)
+    @JoinColumn({ name: "document_id" })
+    document_type!: DocumentTypeEntity
+
+    @OneToMany(() => GroupPersonEntity, (group_person) => group_person.person)
+    groups!: GroupPersonEntity[]
+
+    @OneToMany(() => ProjectPersonEntity, (project_person) => project_person.person)
+    projects!: ProjectPersonEntity[]
 
     @BeforeInsert()
-    toLowerCase(){
+    toLowerCase() {
         this.names = this.names.toLowerCase()
         this.lastnames = this.lastnames.toLowerCase()
         this.institutional_mail = this.institutional_mail.toLowerCase()

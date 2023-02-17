@@ -4,6 +4,7 @@ import { PersonDTO } from '../dto/person.dto';
 import { RoleService } from '../../role/service/role.service';
 import { DocumentTypeService } from '../../document_type/service/document_type.service';
 import { UpdatePersonDTO } from '../dto/update.person.dto';
+import { UpdateResult } from 'typeorm';
 
 
 export class PersonService extends BaseService<PersonEntity>{
@@ -36,25 +37,33 @@ export class PersonService extends BaseService<PersonEntity>{
         try {
             return (await this.execRepository)
                 .createQueryBuilder("person")
-                .leftJoin("person.role","role")
-                .where("role.name = :name", {name:"docente"})
+                .leftJoin("person.role", "role")
+                .where("role.name = :name", { name: "docente" })
                 .getMany()
-        } catch (error:any) {
+        } catch (error: any) {
             throw new Error(error)
         }
     }
 
-    async getAllPersonOfGroup(group_id:string) {
+    async getAllPersonOfGroup(group_id: string):Promise<PersonEntity[] | undefined> {
         try {
             return (await this.execRepository)
                 .createQueryBuilder("person")
                 .leftJoin("person.groups", "group")
-                .leftJoin("person.role","role")
-                .where("group.group_id = :group_id" ,{group_id})
+                .leftJoin("person.role", "role")
+                .where("group.group_id = :group_id", { group_id })
                 .select(["person", "role.name"])
                 .getMany()
-        } catch (error:any) {
+        } catch (error: any) {
             throw new Error(error)
+        }
+    }
+
+    async findOneById(id: string): Promise<PersonEntity | null> {
+        try {
+            return (await this.execRepository).findOneBy({ id })
+        } catch (error: any) {
+            throw new Error(error.message);
         }
     }
 
@@ -97,19 +106,34 @@ export class PersonService extends BaseService<PersonEntity>{
         }
     }
 
-    async update(id:string, body:UpdatePersonDTO) {
+    async update(id: string, body: UpdatePersonDTO):Promise<UpdateResult> {
         try {
             return (await this.execRepository).update(id, body)
-        } catch (error:any) {
-            throw new Error(error)            
+        } catch (error: any) {
+            throw new Error(error)
         }
     }
 
-    async delete(id:string) {
+    async delete(id: string):Promise<UpdateResult> {
         try {
-            return (await this.execRepository).update(id,{active:false})        
-        } catch (error:any) {
-            throw new Error(error)       
+            return (await this.execRepository).update(id, { active: false })
+        } catch (error: any) {
+            throw new Error(error)
+        }
+    }
+
+    async mySubjects(institutional_mail: string): Promise<PersonEntity | null> {
+        try {
+            return (await this.execRepository)
+                .createQueryBuilder("person")
+                .leftJoin("person.groups", "groups")
+                .leftJoin("groups.group", "group")
+                .leftJoin("group.subject", "subject")
+                .where("person.institutional_mail = :institutional_mail", { institutional_mail })
+                .select(["person", "groups.state", "group.name", "subject.name", "subject.code"])
+                .getOne()
+        } catch (error: any) {
+            throw error.message
         }
     }
 }
