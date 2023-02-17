@@ -40,7 +40,6 @@ export class RoleService extends BaseService<RoleEntity>{
                 ])
                 .getOne()
         } catch (error: any) {
-            console.log(error);
             throw new Error(error)
         }
     }
